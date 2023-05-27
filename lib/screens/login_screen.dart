@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:write_master/constants/colors.dart';
+import 'package:write_master/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: NeoPopButton(
               onTapUp: () {
                 HapticFeedback.lightImpact();
+                AuthService().signInWithGoogle();
                 print("hello");
               },
               color: kButtonColor,
