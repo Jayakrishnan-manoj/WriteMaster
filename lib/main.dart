@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'WriteMaster',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'EBGaramond',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
