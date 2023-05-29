@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 import 'package:write_master/constants/colors.dart';
+import 'package:write_master/screens/input_screens/essay_input_screen.dart';
 import 'package:write_master/services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,15 +19,32 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: kScaffoldBackgroundColor,
-        title: IconButton(
-          onPressed: () {
-            AuthService().signOut();
-          },
-          icon: const Icon(
-            Icons.logout,
-            color: Colors.white,
+        title: const Text.rich(
+          TextSpan(
+            text: "Write",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+            children: [
+              TextSpan(
+                text: "Master",
+                style: TextStyle(
+                  color: kButtonColor,
+                  fontSize: 30,
+                ),
+              ),
+            ],
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              AuthService().signOut();
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -49,6 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: NeoPopButton(
                 onTapUp: () {
                   HapticFeedback.mediumImpact();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EssayInputScreen(),
+                    ),
+                  );
                 },
                 border: Border.all(
                   color: kButtonColor,
@@ -66,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "ESSAY",
                     style: TextStyle(
-                      color: kButtonColor,
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
@@ -96,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "COVER LETTER",
                     style: TextStyle(
-                      color: kButtonColor,
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
@@ -126,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "LETTER",
                     style: TextStyle(
-                      color: kButtonColor,
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
@@ -156,7 +179,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     "REPORT",
                     style: TextStyle(
-                      color: kButtonColor,
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: NeoPopButton(
+                onTapUp: () {
+                  HapticFeedback.mediumImpact();
+                },
+                border: Border.all(
+                  color: kButtonColor,
+                  width: 2,
+                ),
+                color: kScaffoldBackgroundColor,
+                disabledColor: kScaffoldBackgroundColor,
+                bottomShadowColor: kButtonColor,
+                rightShadowColor: kButtonColor,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 90,
+                  ),
+                  child: Text(
+                    "MESSAGES",
+                    style: TextStyle(
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
