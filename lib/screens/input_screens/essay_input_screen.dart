@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 import 'package:write_master/constants/colors.dart';
-import 'package:write_master/widgets/custom_textfield.dart';
 
 class EssayInputScreen extends StatefulWidget {
   const EssayInputScreen({super.key});
@@ -18,50 +16,95 @@ class _EssayInputScreenState extends State<EssayInputScreen> {
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 15,
-          ),
-          child: Column(
-            children: [
-              const Text(
-                "What topic do you want the essay for?",
-                style: TextStyle(
-                  fontSize: 40,
-                  color: kButtonColor,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextField(
-                essayController: essayController,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              NeoPopTiltedButton(
-                onTapUp: () {
-                  HapticFeedback.mediumImpact();
-                },
-                color: kButtonColor,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 70,
-                    vertical: 15,
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
                   child: Text(
-                    'Generate',
+                    "Essay",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: 35,
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Card(
+                    color: const Color(0xFF161616),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        20,
+                      ),
+                    ),
+                    child: Container(
+                      height: 250,
+                      width: 450,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10.0,
+                          horizontal: 12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "TOPIC TO BE GENERATED",
+                              style: TextStyle(color: Colors.white54),
+                            ),
+                            TextField(
+                              controller: essayController,
+                              maxLines: 4,
+                              decoration: const InputDecoration(
+                                hintText: "Write an essay on global warming",
+                                hintStyle: TextStyle(
+                                  color: Colors.white54,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                              cursorColor: Colors.white,
+                            ),
+                            Center(
+                              child: NeoPopButton(
+                                color: Colors.white,
+                                onTapUp: () {},
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 8,
+                                    horizontal: 50,
+                                  ),
+                                  child: Text(
+                                    'generate',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

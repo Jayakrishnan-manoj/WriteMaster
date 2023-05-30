@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 import 'package:write_master/constants/colors.dart';
 import 'package:write_master/screens/input_screens/essay_input_screen.dart';
+import 'package:write_master/screens/input_screens/essay_input_screen.dart';
 import 'package:write_master/services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
