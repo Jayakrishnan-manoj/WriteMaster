@@ -14,7 +14,7 @@ Future<String> generateEssay(String prompt) async {
     },
     body: jsonEncode({
       'model': "text-davinci-003",
-      'prompt': "Give me 5 points for an essay on the topic: $prompt",
+      'prompt': "Give me only 5 points for an essay on the topic: $prompt",
       'temperature': 0,
       'max_tokens': 500,
     }),

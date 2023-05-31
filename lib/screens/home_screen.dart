@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 import 'package:write_master/constants/colors.dart';
 import 'package:write_master/screens/input_screens/essay_input_screen.dart';
+import 'package:write_master/screens/input_screens/message_input_screen.dart';
 import 'package:write_master/services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -192,6 +193,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: NeoPopButton(
                 onTapUp: () {
                   HapticFeedback.mediumImpact();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MessageInputScreen(),
+                    ),
+                  );
                 },
                 border: Border.all(
                   color: kButtonColor,
