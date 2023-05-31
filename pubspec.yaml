@@ -28,7 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  build_runner: ^2.4.4
   cupertino_icons: ^1.0.2
+  envied: ^0.3.0+3
+  envied_generator: ^0.3.0+3
   firebase_auth: ^4.6.1
   firebase_core: ^2.13.0
   flutter:
@@ -70,7 +73,6 @@ flutter:
         - asset: assets/fonts/EBGaramond-Regular.ttf
         - asset: assets/fonts/EBGaramond-Medium.ttf
         - asset: assets/fonts/EBGaramond-Bold.ttf
-
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
