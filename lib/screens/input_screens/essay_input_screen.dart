@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:neopop/neopop.dart';
 import 'package:write_master/constants/colors.dart';
 import 'package:write_master/services/response_service.dart';
+
+import '../../widgets/custom_inputfield.dart';
 
 class EssayInputScreen extends StatefulWidget {
   const EssayInputScreen({super.key});
@@ -14,156 +15,91 @@ class EssayInputScreen extends StatefulWidget {
 class _EssayInputScreenState extends State<EssayInputScreen> {
   bool _isLoading = false;
   String result = "";
-  final textFocusNode = FocusNode();
+  final essayFocusNode = FocusNode();
+  bool hasResults = false;
+  final TextEditingController essayController = TextEditingController();
 
   @override
   void dispose() {
-    textFocusNode.dispose();
+    essayFocusNode.dispose();
     super.dispose();
   }
 
-  final TextEditingController essayController = TextEditingController();
+  void generateEssayResponse() {
+    essayFocusNode.unfocus();
+    HapticFeedback.lightImpact();
+    setState(() {
+      _isLoading = true;
+    });
+    generateEssay(essayController.text).then((value) {
+      setState(() {
+        result = value;
+        hasResults = true;
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Essay",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                    ),
-                  ),
-                ),
-              ],
+            CustomInputField(
+              title: 'Essay',
+              textFieldHeader: 'TOPIC FOR THE essay',
+              hintText: 'An essay on Global Warming',
+              textFieldController: essayController,
+              textFocusNode: essayFocusNode,
+              generateFunction: () => generateEssayResponse(),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Card(
-                    color: const Color(0xFF161616),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      ),
-                    ),
-                    child: Container(
-                      height: 250,
-                      width: 450,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 12,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "TOPIC TO BE GENERATED",
-                              style: TextStyle(color: Colors.white54),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _isLoading
+                      ? const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
                             ),
-                            TextField(
-                              focusNode: textFocusNode,
-                              controller: essayController,
-                              maxLines: 4,
-                              decoration: const InputDecoration(
-                                hintText: "Write an essay on global warming",
-                                hintStyle: TextStyle(
-                                  color: Colors.white54,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                              cursorColor: Colors.white,
-                            ),
-                            Center(
-                              child: NeoPopButton(
-                                color: Colors.white,
-                                onTapUp: () {
-                                  textFocusNode.unfocus();
-                                  HapticFeedback.lightImpact();
-                                  setState(() {
-                                    _isLoading = true;
-                                  });
-                                  generateEssay(essayController.text)
-                                      .then((value) {
-                                    setState(() {
-                                      result = value;
-                                      _isLoading = false;
-                                    });
-                                  });
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 8,
-                                    horizontal: 50,
-                                  ),
-                                  child: Text(
-                                    'generate',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 20,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              hasResults
+                                  ? const Text(
+                                      "KEY POINTS:",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    )
+                                  : Container(),
+                              Text(
+                                result,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            _isLoading
-                ? const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10.0,
-                      horizontal: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "KEY POINTS:",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                            ],
                           ),
                         ),
-                        Text(
-                          result,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
