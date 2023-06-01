@@ -26,13 +26,13 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
     super.dispose();
   }
 
-  void generateEssayResponse() {
+  void generateReportResponse() {
     reportFocusNode.unfocus();
     HapticFeedback.lightImpact();
     setState(() {
       _isLoading = true;
     });
-    generateEssay(reportController.text).then((value) {
+    generateReport(reportController.text).then((value) {
       setState(() {
         result = value;
         hasResults = true;
@@ -54,7 +54,7 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
               hintText: 'A report on the covid-19 pandemic',
               textFieldController: reportController,
               textFocusNode: reportFocusNode,
-              generateFunction: () => generateEssayResponse(),
+              generateFunction: () => generateReportResponse(),
             ),
             SingleChildScrollView(
               child: Column(
