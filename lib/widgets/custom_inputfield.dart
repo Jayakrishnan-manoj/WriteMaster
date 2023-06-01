@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
 
 class CustomInputField extends StatefulWidget {
@@ -8,7 +7,7 @@ class CustomInputField extends StatefulWidget {
   final String hintText;
   final TextEditingController textFieldController;
   final FocusNode textFocusNode;
-  void generateFunction;
+  final VoidCallback generateFunction;
   CustomInputField({
     super.key,
     required this.title,
@@ -16,7 +15,7 @@ class CustomInputField extends StatefulWidget {
     required this.hintText,
     required this.textFieldController,
     required this.textFocusNode,
-    this.generateFunction,
+    required this.generateFunction,
   });
 
   @override
@@ -91,7 +90,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
                           Center(
                             child: NeoPopButton(
                               color: Colors.white,
-                              onTapUp: () => widget.generateFunction,
+                              onTapUp: () => widget.generateFunction(),
                               child: const Padding(
                                 padding: EdgeInsets.symmetric(
                                   vertical: 8,
