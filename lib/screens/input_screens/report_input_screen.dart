@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:write_master/constants/colors.dart';
-import 'package:write_master/services/response_service.dart';
+import 'package:write_master/providers/result_provider.dart';
 
 import '../../widgets/custom_inputfield.dart';
 
@@ -14,7 +15,6 @@ class ReportInputScreen extends StatefulWidget {
 
 class _ReportInputScreenState extends State<ReportInputScreen> {
   bool _isLoading = false;
-  String result = "";
   final reportFocusNode = FocusNode();
   bool hasResults = false;
   final TextEditingController reportController = TextEditingController();
@@ -26,38 +26,34 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
     super.dispose();
   }
 
-  void generateReportResponse() {
-    reportFocusNode.unfocus();
-    HapticFeedback.lightImpact();
-    setState(() {
-      _isLoading = true;
-    });
-    generateReport(reportController.text).then((value) {
-      setState(() {
-        result = value;
-        hasResults = true;
-        _isLoading = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomInputField(
-              title: 'Report',
-              textFieldHeader: 'EVENT FOR THE REPORT',
-              hintText: 'A report on the covid-19 pandemic',
-              textFieldController: reportController,
-              textFocusNode: reportFocusNode,
-              generateFunction: () => generateReportResponse(),
-            ),
-            SingleChildScrollView(
-              child: Column(
+        child: Consumer<ResultProvider>(
+          builder: (context, resultProvider, _) => Column(
+            children: [
+              CustomInputField(
+                title: 'Report',
+                textFieldHeader: 'EVENT FOR THE REPORT',
+                hintText: 'A report on the covid-19 pandemic',
+                textFieldController: reportController,
+                textFocusNode: reportFocusNode,
+                generateFunction: () async {
+                  HapticFeedback.lightImpact();
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  await Provider.of<ResultProvider>(context, listen: false)
+                      .generateResult(reportController.text);
+                  setState(() {
+                    _isLoading = false;
+                    hasResults = true;
+                  });
+                },
+              ),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _isLoading
@@ -88,7 +84,7 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
                                     )
                                   : Container(),
                               Text(
-                                result,
+                                resultProvider.result,
                                 textAlign: TextAlign.start,
                                 style: const TextStyle(
                                   color: Colors.white,
@@ -100,8 +96,8 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
                         ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
