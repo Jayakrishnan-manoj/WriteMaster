@@ -84,7 +84,7 @@ class _ReportInputScreenState extends State<ReportInputScreen> {
                                     )
                                   : Container(),
                               Text(
-                                resultProvider.result,
+                                resultProvider.reportResult,
                                 textAlign: TextAlign.start,
                                 style: const TextStyle(
                                   color: Colors.white,
