@@ -63,26 +63,51 @@ class ResultProvider extends ChangeNotifier {
   }
 
   Future<void> generateEssay(String prompt) async {
-  final apiKey = Env.gptKey;
-  var url = Uri.https("api.openai.com", "/v1/completions");
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    },
-    body: jsonEncode({
-      'model': "text-davinci-003",
-      'prompt': "Give me only 5 points for an essay on the topic: $prompt",
-      'temperature': 0,
-      'max_tokens': 500,
-    }),
-  );
-  print(response.body);
+    final apiKey = Env.gptKey;
+    var url = Uri.https("api.openai.com", "/v1/completions");
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      },
+      body: jsonEncode({
+        'model': "text-davinci-003",
+        'prompt': "Give me only 5 points for an essay on the topic: $prompt",
+        'temperature': 0,
+        'max_tokens': 500,
+      }),
+    );
+    print(response.body);
 
-  Map<String, dynamic> newResponse = jsonDecode(response.body);
-  print(newResponse);
-  _essayresult =  newResponse['choices'][0]['text'];
-  notifyListeners();
-}
+    Map<String, dynamic> newResponse = jsonDecode(response.body);
+    print(newResponse);
+    _essayresult = newResponse['choices'][0]['text'];
+    notifyListeners();
+  }
+
+  Future<void> generateLetter(String prompt, String format) async {
+    final apiKey = Env.gptKey;
+    var url = Uri.https("api.openai.com", "/v1/completions");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      },
+      body: jsonEncode({
+        'model': "text-davinci-003",
+        'prompt': "Give me only 5 points for an essay on the topic: $prompt",
+        'temperature': 0,
+        'max_tokens': 500,
+      }),
+    );
+    print(response.body);
+
+    Map<String, dynamic> newResponse = jsonDecode(response.body);
+    print(newResponse);
+    _essayresult = newResponse['choices'][0]['text'];
+    notifyListeners();
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:neopop/neopop.dart';
+import 'package:write_master/screens/input_screens/letter_input_screen.dart';
 
 import '../constants/colors.dart';
 
@@ -44,6 +45,12 @@ class BottomSheetContent extends StatelessWidget {
               child: NeoPopButton(
                 onTapUp: () {
                   HapticFeedback.mediumImpact();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const LetterInputScreen(format: 'formal'),
+                    ),
+                  );
                 },
                 border: Border.all(
                   color: kButtonColor,
@@ -77,6 +84,12 @@ class BottomSheetContent extends StatelessWidget {
               child: NeoPopButton(
                 onTapUp: () {
                   HapticFeedback.mediumImpact();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const LetterInputScreen(format: 'informal'),
+                    ),
+                  );
                 },
                 border: Border.all(
                   color: kButtonColor,
