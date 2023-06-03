@@ -6,6 +6,7 @@ import 'package:write_master/screens/input_screens/essay_input_screen.dart';
 import 'package:write_master/screens/input_screens/message_input_screen.dart';
 import 'package:write_master/screens/input_screens/report_input_screen.dart';
 import 'package:write_master/services/auth_service.dart';
+import 'package:write_master/widgets/bottom_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return const BottomSheetContent();
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: NeoPopButton(
                 onTapUp: () {
                   HapticFeedback.mediumImpact();
+                  _showModalBottomSheet(context);
                 },
                 border: Border.all(
                   color: kButtonColor,

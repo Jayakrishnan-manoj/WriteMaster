@@ -6,14 +6,14 @@ import 'package:write_master/constants/colors.dart';
 import '../../providers/result_provider.dart';
 import '../../widgets/custom_inputfield.dart';
 
-class MessageInputScreen extends StatefulWidget {
-  const MessageInputScreen({super.key});
+class EssayInputScreen extends StatefulWidget {
+  const EssayInputScreen({super.key});
 
   @override
-  State<MessageInputScreen> createState() => _MessageInputScreenState();
+  State<EssayInputScreen> createState() => _EssayInputScreenState();
 }
 
-class _MessageInputScreenState extends State<MessageInputScreen> {
+class _EssayInputScreenState extends State<EssayInputScreen> {
   bool _isLoading = false;
   final essayFocusNode = FocusNode();
   bool hasResults = false;
