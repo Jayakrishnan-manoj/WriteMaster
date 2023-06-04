@@ -20,6 +20,9 @@ class ResultProvider extends ChangeNotifier {
   String _informalLetterResult = "";
   String get informalLetterResult => _informalLetterResult;
 
+  String _coverLetterResult = "";
+  String get coverLetterResult => _coverLetterResult;
+
   Future<void> generateResult(String prompt) async {
     final apiKey = Env.gptKey;
     var url = Uri.https("api.openai.com", "/v1/completions");
@@ -126,6 +129,30 @@ class ResultProvider extends ChangeNotifier {
     } else {
       _informalLetterResult = newResponse['choices'][0]['text'];
     }
+    notifyListeners();
+  }
+
+  Future<void> generateCoverLetter(
+      String company, String skills, String role, String info) async {
+    final apiKey = Env.gptKey;
+    var url = Uri.https("api.openai.com", "/v1/completions");
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      },
+      body: jsonEncode({
+        'model': "text-davinci-003",
+        'prompt':
+            "Give me only 5 points for the body of cover letter for the following details: Company:$company, role:$role, my skills: $skills, and my info: $info and avoid salutations. ",
+        'temperature': 0,
+        'max_tokens': 500,
+      }),
+    );
+
+    Map<String, dynamic> newResponse = jsonDecode(response.body);
+    _coverLetterResult = newResponse['choices'][0]['text'];
     notifyListeners();
   }
 }
