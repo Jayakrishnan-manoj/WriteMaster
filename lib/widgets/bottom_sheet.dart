@@ -48,7 +48,7 @@ class BottomSheetContent extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          const LetterInputScreen(format: 'formal'),
+                          const LetterInputScreen(formal: true,),
                     ),
                   );
                 },
@@ -87,7 +87,7 @@ class BottomSheetContent extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          const LetterInputScreen(format: 'informal'),
+                          const LetterInputScreen(formal: false),
                     ),
                   );
                 },

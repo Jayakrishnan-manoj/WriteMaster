@@ -7,10 +7,10 @@ import '../../providers/result_provider.dart';
 import '../../widgets/custom_inputfield.dart';
 
 class LetterInputScreen extends StatefulWidget {
-  final String format;
+  final bool formal;
   const LetterInputScreen({
     super.key,
-    required this.format,
+    required this.formal,
   });
 
   @override
@@ -31,9 +31,11 @@ class _LetterInputScreenState extends State<LetterInputScreen> {
           builder: (context, resultProvider, _) => Column(
             children: [
               CustomInputField(
-                title: 'Messages',
-                textFieldHeader: 'TOPIC FOR THE MESSAGE',
-                hintText: 'Thank you message for a gift',
+                title: widget.formal ? "Formal Letter" : "Informal Letter",
+                textFieldHeader: 'SUBJECT FOR THE LETTER',
+                hintText: widget.formal
+                    ? "letter to HR on appraisal"
+                    : "thanksgiving invitation to friend",
                 textFieldController: letterController,
                 textFocusNode: letterFocusNode,
                 generateFunction: () async {
@@ -45,7 +47,7 @@ class _LetterInputScreenState extends State<LetterInputScreen> {
                   await Provider.of<ResultProvider>(context, listen: false)
                       .generateLetter(
                     letterController.text,
-                    widget.format,
+                    widget.formal,
                   );
                   setState(() {
                     _isLoading = false;
@@ -84,7 +86,9 @@ class _LetterInputScreenState extends State<LetterInputScreen> {
                                     )
                                   : Container(),
                               Text(
-                                resultProvider.messageResult,
+                                widget.formal
+                                    ? resultProvider.formalLetterResult
+                                    : resultProvider.informalLetterResult,
                                 textAlign: TextAlign.start,
                                 style: const TextStyle(
                                   color: Colors.white,
