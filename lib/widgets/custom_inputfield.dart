@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neopop/neopop.dart';
 
-class CustomInputField extends StatefulWidget {
+class CustomInputField extends StatelessWidget {
   final String title;
   final String textFieldHeader;
   final String hintText;
@@ -19,11 +19,6 @@ class CustomInputField extends StatefulWidget {
   });
 
   @override
-  State<CustomInputField> createState() => _CustomInputFieldState();
-}
-
-class _CustomInputFieldState extends State<CustomInputField> {
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
@@ -34,7 +29,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  widget.title,
+                  title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 35,
@@ -66,15 +61,15 @@ class _CustomInputFieldState extends State<CustomInputField> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.textFieldHeader,
+                            textFieldHeader,
                             style: const TextStyle(color: Colors.white54),
                           ),
                           TextField(
-                            focusNode: widget.textFocusNode,
-                            controller: widget.textFieldController,
+                            focusNode: textFocusNode,
+                            controller: textFieldController,
                             maxLines: 4,
                             decoration: InputDecoration(
-                              hintText: widget.hintText,
+                              hintText: hintText,
                               hintStyle: const TextStyle(
                                 color: Colors.white54,
                               ),
@@ -90,7 +85,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
                           Center(
                             child: NeoPopButton(
                               color: Colors.white,
-                              onTapUp: () => widget.generateFunction(),
+                              onTapUp: () => generateFunction(),
                               child: const Padding(
                                 padding: EdgeInsets.symmetric(
                                   vertical: 8,
